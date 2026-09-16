@@ -112,50 +112,111 @@
                 </div>
             </div>
 
-            <!-- Property Specifications Details -->
+            <!-- Property Specifications & Monthly Payment Calculator -->
             <div class="p-6 sm:p-8">
-                <h2
-                    class="text-base font-bold text-slate-900 mb-5 pb-3 border-b border-slate-100 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Property Specifications
-                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                    <!-- Property Specifications -->
+                    <div class="md:col-span-7">
+                        <h2
+                            class="text-base font-bold text-slate-900 mb-5 pb-3 border-b border-slate-100 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Property Specifications
+                        </h2>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
-                    <div class="flex justify-between py-2 border-b border-slate-100">
-                        <span class="text-slate-500 font-medium">Street Address</span>
-                        <span class="text-slate-900 font-semibold">{{ listing.street_no }} {{ listing.street }}</span>
+                        <div class="space-y-1 text-sm">
+                            <div class="flex justify-between py-2.5 border-b border-slate-100">
+                                <span class="text-slate-500 font-medium">Street Address</span>
+                                <span class="text-slate-900 font-semibold">{{ listing.street_no }} {{ listing.street
+                                }}</span>
+                            </div>
+
+                            <div class="flex justify-between py-2.5 border-b border-slate-100">
+                                <span class="text-slate-500 font-medium">City</span>
+                                <span class="text-slate-900 font-semibold">{{ listing.city }}</span>
+                            </div>
+
+                            <div class="flex justify-between py-2.5 border-b border-slate-100">
+                                <span class="text-slate-500 font-medium">Postal / ZIP Code</span>
+                                <span
+                                    class="font-mono text-xs text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200/60 font-semibold">
+                                    {{ listing.code }}
+                                </span>
+                            </div>
+
+                            <div class="flex justify-between py-2.5 border-b border-slate-100">
+                                <span class="text-slate-500 font-medium">Price per Sq Ft</span>
+                                <span class="text-slate-900 font-semibold">${{ pricePerSqFt.toLocaleString() }} / sq
+                                    ft</span>
+                            </div>
+
+                            <div class="flex justify-between py-2.5 border-b border-slate-100">
+                                <span class="text-slate-500 font-medium">Bedrooms</span>
+                                <span class="text-slate-900 font-semibold">{{ listing.beds }} Rooms</span>
+                            </div>
+
+                            <div class="flex justify-between py-2.5 border-b border-slate-100">
+                                <span class="text-slate-500 font-medium">Bathrooms</span>
+                                <span class="text-slate-900 font-semibold">{{ listing.baths }} Baths</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="flex justify-between py-2 border-b border-slate-100">
-                        <span class="text-slate-500 font-medium">City</span>
-                        <span class="text-slate-900 font-semibold">{{ listing.city }}</span>
-                    </div>
+                    <!-- Monthly Payment Calculator Card -->
+                    <div class="md:col-span-5">
+                        <div class="bg-white rounded-xl border border-slate-200/80 p-5 sm:p-6 shadow-2xs">
+                            <h3 class="text-base font-semibold text-slate-800 mb-4">
+                                Monthly Payment
+                            </h3>
 
-                    <div class="flex justify-between py-2 border-b border-slate-100">
-                        <span class="text-slate-500 font-medium">Postal / ZIP Code</span>
-                        <span
-                            class="font-mono text-xs text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200/60 font-semibold">
-                            {{ listing.code }}
-                        </span>
-                    </div>
+                            <div class="space-y-4">
+                                <!-- Interest Rate Slider -->
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-600 mb-2">
+                                        Interest rate ({{ interestRate }}%)
+                                    </label>
+                                    <input v-model.number="interestRate" type="range" min="0.1" max="30" step="0.1"
+                                        class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none" />
+                                </div>
 
-                    <div class="flex justify-between py-2 border-b border-slate-100">
-                        <span class="text-slate-500 font-medium">Price per Sq Ft</span>
-                        <span class="text-slate-900 font-semibold">${{ pricePerSqFt.toLocaleString() }} / sq ft</span>
-                    </div>
+                                <!-- Duration Slider -->
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-600 mb-2">
+                                        Duration ({{ duration }} years)
+                                    </label>
+                                    <input v-model.number="duration" type="range" min="3" max="35" step="1"
+                                        class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none" />
+                                </div>
 
-                    <div class="flex justify-between py-2 border-b border-slate-100">
-                        <span class="text-slate-500 font-medium">Bedrooms</span>
-                        <span class="text-slate-900 font-semibold">{{ listing.beds }} Rooms</span>
-                    </div>
+                                <!-- Result -->
+                                <div class="pt-3">
+                                    <div class="text-xs text-slate-400 font-medium">
+                                        Your monthly payment
+                                    </div>
+                                    <div class="text-3xl font-extrabold text-slate-800 tracking-tight mt-1">
+                                        ${{ monthlyPayment.toLocaleString() }}
+                                    </div>
 
-                    <div class="flex justify-between py-2 border-b border-slate-100">
-                        <span class="text-slate-500 font-medium">Bathrooms</span>
-                        <span class="text-slate-900 font-semibold">{{ listing.baths }} Baths</span>
+                                    <!-- Total Paid & Total Interest Breakdown -->
+                                    <div
+                                        class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                                        <div>
+                                            <span class="text-slate-400 block font-medium">Total Paid</span>
+                                            <span class="font-bold text-slate-700">${{ totalPaid.toLocaleString()
+                                            }}</span>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-slate-400 block font-medium">Total Interest</span>
+                                            <span class="font-bold text-slate-700">${{ totalInterest.toLocaleString()
+                                            }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,13 +266,15 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import { useMonthlyPayment } from '@/Composables/useMonthlyPayment';
 
 const props = defineProps({
     listing: Object,
 });
 
-
+const interestRate = ref(2.5);
+const duration = ref(25);
 // Price per square foot calculation
 const pricePerSqFt = computed(() => {
     if (!props.listing?.price || !props.listing?.area || Number(props.listing.area) === 0) {
@@ -219,4 +282,11 @@ const pricePerSqFt = computed(() => {
     }
     return Math.round(Number(props.listing.price) / Number(props.listing.area));
 });
+
+// Monthly payment calculation
+const { monthlyPayment, totalPaid, totalInterest } = useMonthlyPayment(
+    () => props.listing?.price,
+    duration,
+    interestRate
+);
 </script>
