@@ -47,8 +47,16 @@
                         $page.url.startsWith('/login')
                             ? 'font-semibold bg-indigo-50 text-indigo-600'
                             : 'font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                    ]">
+                    ]" v-show="!loginUser">
                         Login
+                    </Link>
+                    <Link :href="route('frontend.logout')" method="delete" as="button" :class="[
+                        'px-3.5 py-1.5 text-sm rounded-lg transition-colors',
+                        $page.url.startsWith(route('frontend.logout'))
+                            ? 'font-semibold bg-indigo-50 text-indigo-600'
+                            : 'font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    ]" v-show="loginUser">
+                        Logout
                     </Link>
                 </nav>
 
@@ -78,9 +86,11 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
+import { route } from 'vendor/tightenco/ziggy/dist';
 
+const loginUser = computed(() => usePage().props.user);
 const timer = ref(0);
 
 setInterval(() => {

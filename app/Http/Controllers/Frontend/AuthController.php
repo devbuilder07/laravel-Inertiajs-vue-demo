@@ -33,8 +33,13 @@ class AuthController extends Controller
         return redirect()->intended(route('frontend.listing.index'))->with('success', 'Login successfully!');
     }
 
-    public function destroy()
+    public function destroy(Request $request)
     {
-        // body
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('frontend.listing.index')->with('success', 'Logout successfully!');
     }
 }
