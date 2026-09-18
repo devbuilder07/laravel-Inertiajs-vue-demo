@@ -1,4 +1,6 @@
 <template>
+
+    <Head title="View List" />
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         <!-- Top Navigation / Breadcrumbs -->
         <div class="mb-6 flex items-center justify-between">
@@ -131,7 +133,7 @@
                             <div class="flex justify-between py-2.5 border-b border-slate-100">
                                 <span class="text-slate-500 font-medium">Street Address</span>
                                 <span class="text-slate-900 font-semibold">{{ listing.street_no }} {{ listing.street
-                                }}</span>
+                                    }}</span>
                             </div>
 
                             <div class="flex justify-between py-2.5 border-b border-slate-100">
@@ -206,12 +208,12 @@
                                         <div>
                                             <span class="text-slate-400 block font-medium">Total Paid</span>
                                             <span class="font-bold text-slate-700">${{ totalPaid.toLocaleString()
-                                            }}</span>
+                                                }}</span>
                                         </div>
                                         <div class="text-right">
                                             <span class="text-slate-400 block font-medium">Total Interest</span>
                                             <span class="font-bold text-slate-700">${{ totalInterest.toLocaleString()
-                                            }}</span>
+                                                }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -265,7 +267,7 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { useMonthlyPayment } from '@/Composables/useMonthlyPayment';
 

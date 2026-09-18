@@ -1,4 +1,6 @@
 <template>
+
+    <Head title="Listing" />
     <Layout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
             <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -159,7 +161,7 @@
 </template>
 
 <script setup>
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { Link, router, usePage, Head } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 import { computed, ref, watch } from 'vue';
 

@@ -1,4 +1,6 @@
 <template>
+
+    <Head title="Create List" />
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         <!-- Page Header & Navigation -->
         <div class="mb-8">
@@ -184,7 +186,7 @@
 </template>
 
 <script setup>
-import { Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     beds: null,

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class AuthController extends Controller
@@ -12,9 +15,22 @@ class AuthController extends Controller
         return Inertia::render('frontend/auth/login');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        // body
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        if (! Auth::attempt($validated, $request->boolean('remember'))) {
+            throw ValidationException::withMessages([
+                'email' => 'These credentials do not match our records.',
+            ]);
+        }
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('frontend.listing.index'))->with('success', 'Login successfully!');
     }
 
     public function destroy()

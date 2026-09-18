@@ -2,7 +2,12 @@
     <main
         class="flex-1 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative overflow-hidden">
 
-        <Head title="About - Laravel Vue Inertia" />
+        <Head title="About - Laravel Vue Inertia">
+            <meta name="description"
+                content="Learn more about our Laravel, Vue 3, and Inertia.js application and its client-side state preservation."
+                head-key="description" />
+            <meta name="keywords" content="laravel, vue3, inertiajs, spa, real estate, listing" head-key="keywords" />
+        </Head>
 
         <!-- Subtle background ambient glows -->
         <div

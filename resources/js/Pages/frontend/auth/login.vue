@@ -43,8 +43,10 @@
                                 </svg>
                             </div>
                             <input id="email" type="email" v-model="form.email" placeholder="name@example.com"
-                                class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none" />
+                                class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none"
+                                :class="{ 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/10': form.errors.email }" />
                         </div>
+                        <p v-if="form.errors.email" class="input-error">{{ form.errors.email }}</p>
                     </div>
 
                     <!-- Password Input -->
@@ -66,8 +68,10 @@
                                 </svg>
                             </div>
                             <input id="password" type="password" v-model="form.password" placeholder="••••••••"
-                                class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none" />
+                                class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none"
+                                :class="{ 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/10': form.errors.password }" />
                         </div>
+                        <p v-if="form.errors.password" class="input-error">{{ form.errors.password }}</p>
                     </div>
 
                     <!-- Remember Me -->
