@@ -42,6 +42,14 @@
                     ]">
                         Listing
                     </Link>
+                    <Link :href="route('frontend.login')" :class="[
+                        'px-3.5 py-1.5 text-sm rounded-lg transition-colors',
+                        $page.url.startsWith('/login')
+                            ? 'font-semibold bg-indigo-50 text-indigo-600'
+                            : 'font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    ]">
+                        Login
+                    </Link>
                 </nav>
 
                 <!-- Right Action / Status (Persistent Layout Timer) -->

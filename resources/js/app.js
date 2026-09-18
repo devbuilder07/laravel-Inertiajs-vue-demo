@@ -1,7 +1,7 @@
 import '../css/app.css';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createApp, h } from 'vue';
+import { createSSRApp, h } from 'vue';
 import MainLayout from '@/Pages/frontend/layouts/main.vue';
 import { ZiggyVue } from 'ziggy-js';
 
@@ -12,7 +12,17 @@ createInertiaApp({
         return page;
     },
     setup({ el, App, props, plugin }) {
-        const app = createApp({ render: () => h(App, props) }).use(plugin).use(ZiggyVue);
+        const ziggy = props.initialPage?.props?.ziggy;
+        const app = createSSRApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(ZiggyVue, ziggy ? {
+                ...ziggy,
+                location:
+                    typeof window === 'undefined'
+                        ? new URL(ziggy.location)
+                        : undefined,
+            } : undefined);
+
         if (el) {
             app.mount(el);
         }
