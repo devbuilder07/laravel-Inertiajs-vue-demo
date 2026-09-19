@@ -10,6 +10,11 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
 });
 Route::resource('listing', ListingController::class);
+/* Route::resource('listing', ListingController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware('auth');
+Route::resource('listing', ListingController::class)
+    ->except(['create', 'store', 'edit', 'update', 'destroy']); */
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'create')->name('login');

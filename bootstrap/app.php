@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->redirectGuestsTo(fn () => route('frontend.login'));
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);

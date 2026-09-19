@@ -5,20 +5,29 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\{HasMiddleware, Middleware};
 use Inertia\Inertia;
 
-class ListingController extends Controller
+class ListingController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('auth', except: ['index', 'show']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $listings = Listing::orderBy('created_at', 'DESC')->get();
+
         return Inertia::render(
             'frontend/listing/index',
             [
-                'listings' => $listings
+                'listings' => $listings,
             ]
         );
     }
@@ -44,7 +53,7 @@ class ListingController extends Controller
             'city' => 'required',
             'street' => 'required',
             'street_no' => 'required',
-            'code' => 'required'
+            'code' => 'required',
         ]);
 
         Listing::create($validated);
@@ -58,10 +67,11 @@ class ListingController extends Controller
     public function show(string $id)
     {
         $listing = Listing::find($id);
+
         return Inertia::render(
             'frontend/listing/show',
             [
-                'listing' => $listing
+                'listing' => $listing,
             ]
         );
     }
@@ -72,10 +82,11 @@ class ListingController extends Controller
     public function edit(string $id)
     {
         $listing = Listing::find($id);
+
         return Inertia::render(
             'frontend/listing/edit',
             [
-                'listing' => $listing
+                'listing' => $listing,
             ]
         );
     }
@@ -93,7 +104,7 @@ class ListingController extends Controller
             'city' => 'required',
             'street' => 'required',
             'street_no' => 'required',
-            'code' => 'required'
+            'code' => 'required',
         ]);
 
         Listing::where('id', $id)->update($validated);
@@ -107,6 +118,7 @@ class ListingController extends Controller
     public function destroy(string $id)
     {
         Listing::where('id', $id)->delete();
+
         return redirect()->route('frontend.listing.index')->with('success', 'Listing deleted successfully!');
     }
 }
