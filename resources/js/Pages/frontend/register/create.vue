@@ -30,6 +30,24 @@
 
                 <!-- Form -->
                 <form @submit.prevent="submit" class="space-y-5">
+                    <!-- Name Input -->
+                    <div>
+                        <label for="name" class="label">Name</label>
+                        <div class="relative">
+                            <div
+                                class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                            </div>
+                            <input id="name" type="text" v-model="form.name" placeholder="John Doe"
+                                class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none"
+                                :class="{ 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/10': form.errors.name }" />
+                        </div>
+                        <p v-if="form.errors.name" class="input-error">{{ form.errors.name }}</p>
+                    </div>
                     <!-- Email Input -->
                     <div>
                         <label for="email" class="label">Email Address</label>
@@ -53,10 +71,6 @@
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
                             <label for="password" class="label !mb-0">Password</label>
-                            <a href="#"
-                                class="text-xs font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">
-                                Forgot password?
-                            </a>
                         </div>
                         <div class="relative">
                             <div
@@ -74,19 +88,10 @@
                         <p v-if="form.errors.password" class="input-error">{{ form.errors.password }}</p>
                     </div>
 
-                    <!-- Remember Me -->
-                    <div class="flex items-center">
-                        <label class="flex items-center gap-2 cursor-pointer select-none">
-                            <input type="checkbox" v-model="form.remember"
-                                class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500/20 focus:ring-offset-0 cursor-pointer" />
-                            <span class="text-xs font-medium text-slate-600">Remember me on this device</span>
-                        </label>
-                    </div>
-
                     <!-- Submit Button -->
                     <button type="submit" :disabled="form.processing"
                         class="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 shadow-sm shadow-indigo-200 hover:shadow-md transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
-                        <span>Sign In</span>
+                        <span>Sign Up</span>
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -96,10 +101,10 @@
 
                 <!-- Footer Sign Up Link -->
                 <p class="mt-8 text-center text-xs text-slate-500">
-                    Don't have an account?
-                    <Link :href="route('frontend.register')"
+                    Already have an account?
+                    <Link :href="route('frontend.login')"
                         class="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors ml-1">
-                        Sign up
+                        Sign In
                     </Link>
                 </p>
             </div>
@@ -108,15 +113,15 @@
 </template>
 
 <script setup>
-import { Link, Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
+    name: '',
     email: '',
-    password: '',
-    remember: false,
+    password: ''
 });
 
 const submit = () => {
-    form.post(route('frontend.login.store'));
+    form.post(route('frontend.register.store'));
 };
 </script>

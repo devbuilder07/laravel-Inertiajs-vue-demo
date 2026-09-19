@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Frontend\AuthController;
-use App\Http\Controllers\Frontend\ListingController;
-use App\Http\Controllers\Frontend\PublicController;
+use App\Http\Controllers\Frontend\{AuthController, ListingController, PublicController, RegisterController};
 use Illuminate\Support\Facades\Route;
 
 Route::controller(PublicController::class)->group(function () {
@@ -20,4 +18,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'create')->name('login');
     Route::post('/login', 'store')->name('login.store');
     Route::delete('/logout', 'destroy')->name('logout');
+});
+
+Route::controller(RegisterController::class)->group(function () {
+    Route::get('/register', 'create')->name('register');
+    Route::post('/register', 'store')->name('register.store');
 });
