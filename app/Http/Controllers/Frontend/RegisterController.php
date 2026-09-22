@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class RegisterController extends Controller
@@ -26,8 +26,10 @@ class RegisterController extends Controller
         $user = new User;
         $user->name = $validated['name'];
         $user->email = $validated['email'];
-        $user->password = Hash::make($validated['password']);
+        $user->password = $validated['password'];
         $user->save();
+
+        Auth::login($user);
 
         return redirect()->route('frontend.listing.index')->with('success', 'User created successfully!');
     }

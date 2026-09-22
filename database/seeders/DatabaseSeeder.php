@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'password' => Hash::make('12345678'),
         ]);
-        Listing::factory(50)->create();
+        Listing::factory(50)->create([
+            'by_user_id' => 1
+        ]);
     }
 }
