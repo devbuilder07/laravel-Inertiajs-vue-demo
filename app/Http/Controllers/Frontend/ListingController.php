@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Listing;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\{HasMiddleware, Middleware};
+use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 
-class ListingController extends Controller implements HasMiddleware
+class ListingController extends Controller
 {
-    public static function middleware(): array
+    use AuthorizesRequests;
+
+    public function __construct()
     {
-        return [
-            new Middleware('auth', except: ['index', 'show']),
-        ];
+        $this->authorizeResource(Listing::class, 'listing');
+        $this->middleware('auth')->except(['index', 'show']);
     }
 
     /**
@@ -22,7 +23,7 @@ class ListingController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $listings = Listing::orderBy('created_at', 'DESC')->get();
+        $listings = Listing::orderBy('id', 'DESC')->paginate(10);
 
         return Inertia::render(
             'frontend/listing/index',
@@ -64,10 +65,8 @@ class ListingController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Listing $listing)
     {
-        $listing = Listing::find($id);
-
         return Inertia::render(
             'frontend/listing/show',
             [
@@ -79,10 +78,8 @@ class ListingController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Listing $listing)
     {
-        $listing = Listing::find($id);
-
         return Inertia::render(
             'frontend/listing/edit',
             [
@@ -94,7 +91,7 @@ class ListingController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Listing $listing)
     {
         $validated = $request->validate([
             'beds' => 'required|numeric',
@@ -107,7 +104,7 @@ class ListingController extends Controller implements HasMiddleware
             'code' => 'required',
         ]);
 
-        Listing::where('id', $id)->update($validated);
+        $listing->update($validated);
 
         return redirect()->route('frontend.listing.index')->with('success', 'Listing updated successfully!');
     }
@@ -115,9 +112,9 @@ class ListingController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Listing $listing)
     {
-        Listing::where('id', $id)->delete();
+        $listing->delete();
 
         return redirect()->route('frontend.listing.index')->with('success', 'Listing deleted successfully!');
     }

@@ -10,7 +10,7 @@
                 </div>
                 <div
                     class="text-xs sm:text-sm font-medium text-slate-600 bg-white px-3.5 py-1.5 rounded-xl border border-slate-200/80 shadow-2xs w-fit">
-                    Total: <span class="font-bold text-slate-900">{{ listings ? listings.length : 0 }}</span> listings
+                    Total: <span class="font-bold text-slate-900">{{ listings.total }}</span> listings
                 </div>
                 <Link href="/listing/create"
                     class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white transition-colors duration-150">
@@ -66,7 +66,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 text-sm">
-                        <tr v-for="listing in listings" :key="listing.id"
+                        <tr v-for="listing in listings.data" :key="listing.id"
                             class="hover:bg-indigo-50/40 transition-colors group">
                             <!-- Beds -->
                             <td class="py-4 px-4 text-center">
@@ -148,13 +148,17 @@
                                 </button>
                             </td>
                         </tr>
-                        <tr v-if="!listings || listings.length === 0">
+                        <tr v-if="!listings || listings.total === 0">
                             <td colspan="9" class="py-8 text-center text-slate-400 text-sm">
                                 No property listings available.
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
+                <div v-if="listings.data.length" class="w-full flex justify-center mt-8 mb-8">
+                    <Pagination :links="listings.links" />
+                </div>
             </div>
         </div>
     </Layout>
@@ -164,6 +168,7 @@
 import { Link, router, usePage, Head } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 import { computed, ref, watch } from 'vue';
+import Pagination from '@/Pages/frontend/Components/pagination.vue';
 
 const page = usePage();
 const flashSuccess = computed(() => page.props.flash?.success);
@@ -176,7 +181,7 @@ watch(flashSuccess, (newVal) => {
 });
 
 const props_data = defineProps({
-    listings: Array,
+    listings: Object,
 });
 
 const confirmDelete = (id) => {
@@ -196,5 +201,5 @@ const confirmDelete = (id) => {
         }
     });
 };
-// console.log(`Pass data from controller ${JSON.stringify(props_data.listings)}`);
+// console.log(`Pass data from controller ${JSON.stringify(props_data.listings.total)}`);
 </script>
