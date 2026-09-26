@@ -31,10 +31,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@example.com',
             'password' => 12345678,
         ]);
-        Listing::factory(50)->create([
+        Listing::factory(500)->create([
             'by_user_id' => 1
         ]);
-        Listing::factory(50)->create([
+        Listing::factory(500)->create([
             'by_user_id' => 2
         ]);
     }
